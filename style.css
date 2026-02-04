@@ -1,0 +1,70 @@
+@font-face {
+  font-family: "Epoch";
+  src: url("fonts/Epoch-BF6881cf42e6637.otf");
+}
+
+/* GLOBAL RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Epoch", sans-serif;
+}
+
+/* PAGE BACKGROUND */
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: url("new wsbg.png") center / cover no-repeat;
+}
+
+/* GAME CANVAS (INTERACTIVE LAYER) */
+canvas {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+
+  /* 🔴 CRITICAL FOR INPUT */
+  z-index: 10;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+/* LEFT MIDDLE – PROGRESS (DISPLAY ONLY) */
+#progress {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 32px;
+
+  z-index: 20;
+  pointer-events: none; /* 🔴 MUST NOT BLOCK CANVAS */
+}
+
+#progress .title {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+/* RIGHT BOTTOM – FOUND WORDS (DISPLAY ONLY) */
+#foundWords {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  color: white;
+  font-size: 20px;
+
+  z-index: 20;
+  pointer-events: none; /* 🔴 MUST NOT BLOCK CANVAS */
+}
+
+#foundWords .title {
+  margin-bottom: 10px;
+}
+
+#foundWords ul {
+  list-style: none;
+}
