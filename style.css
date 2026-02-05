@@ -3,7 +3,9 @@
   src: url("fonts/Epoch-BF6881cf42e6637.otf");
 }
 
-/* GLOBAL RESET */
+/* =========================
+   RESET
+   ========================= */
 * {
   margin: 0;
   padding: 0;
@@ -11,60 +13,237 @@
   font-family: "Epoch", sans-serif;
 }
 
-/* PAGE BACKGROUND */
 body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   background: url("new wsbg.png") center / cover no-repeat;
-}
-
-/* GAME CANVAS (INTERACTIVE LAYER) */
-canvas {
-  position: absolute;
-  inset: 0;
-  background: transparent;
-
-  /* 🔴 CRITICAL FOR INPUT */
-  z-index: 10;
-  pointer-events: auto;
-  touch-action: none;
-}
-
-/* LEFT MIDDLE – PROGRESS (DISPLAY ONLY) */
-#progress {
-  position: absolute;
-  left: 40px;
-  top: 50%;
-  transform: translateY(-50%);
   color: white;
-  font-size: 32px;
+  overflow: hidden;
+}
 
-  z-index: 20;
-  pointer-events: none; /* 🔴 MUST NOT BLOCK CANVAS */
+/* =========================
+   DESKTOP / SMART BOARD
+   (DEFAULT – RESTORED)
+   ========================= */
+
+#layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  height: 100vh;
+}
+
+/* LEFT – PROGRESS */
+#progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
 }
 
 #progress .title {
-  font-size: 36px;
-  margin-bottom: 20px;
+  font-size: 26px;
+  margin-bottom: 12px;
 }
 
-/* RIGHT BOTTOM – FOUND WORDS (DISPLAY ONLY) */
-#foundWords {
+#progress .stats {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* CENTER – GAME */
+#gameArea {
+  position: relative;
+}
+
+canvas {
   position: absolute;
-  right: 40px;
-  bottom: 40px;
-  color: white;
-  font-size: 20px;
-
-  z-index: 20;
-  pointer-events: none; /* 🔴 MUST NOT BLOCK CANVAS */
+  inset: 0;
+  touch-action: none;
 }
 
-#foundWords .title {
+/* =========================
+   RIGHT – FOUND WORDS
+   (DESKTOP / SMART BOARD FIX)
+   ========================= */
+
+/* =========================
+   RIGHT – FOUND WORDS
+   (DENSE DESKTOP / SMART BOARD)
+   ========================= */
+
+#foundWordsSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 24px 28px 24px 0; /* ⬅️ reduced padding */
+}
+
+#foundWordsSection .title {
+  font-size: 18px;          /* ⬅️ slightly smaller */
   margin-bottom: 10px;
+  text-align: right;
 }
 
-#foundWords ul {
-  list-style: none;
+/* 🔑 DENSE STRIP GRID */
+#foundWordsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* ⬅️ smaller columns */
+  gap: 6px 8px;            /* ⬅️ tighter gaps */
+  align-items: start;
 }
+
+/* COMPACT WORD STRIP */
+.found-word {
+  padding: 4px 10px;       /* ⬅️ reduced height */
+  border-radius: 999px;
+  background: rgba(0, 150, 0, 0.55);
+  font-size: 13px;         /* ⬅️ smaller text */
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+}
+
+
+/* =========================
+   MOBILE / PORTRAIT
+   (UNCHANGED)
+   ========================= */
+@media (max-width: 900px), (orientation: portrait) {
+
+  body {
+    overflow-y: auto;
+  }
+
+  #layout {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  #progress {
+    padding: 20px 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  #gameArea {
+    height: 80vh;
+  }
+
+  #foundWordsSection {
+    padding: 20px;
+    align-items: center;
+  }
+
+  #foundWordsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+/* =========================================
+   SMART BOARD – 75 INCH (3840 × 2160)
+   SAME UI, PROPER SCALING
+   ========================================= */
+@media (min-width: 2500px) {
+
+  /* ===== MAIN LAYOUT ===== */
+  #layout {
+    display: grid;
+    grid-template-columns: 420px 1fr 520px; /* wider side panels */
+    height: 100vh;
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  /* ======================
+     LEFT – PROGRESS PANEL
+     ====================== */
+  #progress {
+    padding-left: 80px;
+    justify-content: center;
+  }
+
+  #progress .title {
+    font-size: 88px;
+    margin-bottom: 32px;
+  }
+
+  #progress .stats {
+    font-size: 42px;
+    line-height: 1.9;
+  }
+
+  /* ======================
+     CENTER – GAME AREA
+     ====================== */
+  #gameArea {
+    position: relative;
+  }
+
+  canvas {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ======================
+     RIGHT – FOUND WORDS
+     ====================== */
+  #foundWordsSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px 60px 60px 0;
+    height: 100%;
+  }
+
+  #foundWordsSection .title {
+    width: 100%;
+    text-align: center;
+    font-size: 54px;
+    margin-bottom: 40px;
+    flex-shrink: 0;
+  }
+
+  /* WORD GRID – COLUMN FLOW */
+  #foundWordsGrid {
+    width: 100%;
+    max-height: calc(100vh - 260px);
+
+    column-width: 460px;      /* must fit longest word */
+    column-gap: 72px;
+
+    overflow: hidden;         /* no scroll, no overlap */
+  }
+
+  /* WORD ITEM */
+  .found-word {
+    display: block;
+    break-inside: avoid;
+
+    font-size: 48px;
+    line-height: 1.25;
+    margin-bottom: 18px;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    background: none;
+    padding: 0;
+    position: relative;
+  }
+
+  /* BULLET */
+  .found-word::before {
+    content: "•";
+    margin-right: 16px;
+    color: #6aff6a;
+  }
+}
+
+
+
+
