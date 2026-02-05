@@ -3,26 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <title>Uncluttered Futures – Word Search</title>
+
+  <!-- IMPORTANT: mobile + touch + address bar safe -->
+  <meta
+    name="viewport"
+    content="width=device-width, height=device-height,
+    initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <!-- Progress (Left Middle) -->
-  <div id="progress">
-    <div class="title">PROGRESS</div>
-    <div>TOTAL WORDS : <span id="totalCount"></span></div>
-    <div>FOUND : <span id="foundCount">0</span></div>
+  <!-- MAIN DESKTOP / SMART BOARD LAYOUT -->
+  <div id="layout">
+
+    <!-- LEFT PANEL : PROGRESS -->
+    <aside id="progress">
+      <div class="title">PROGRESS</div>
+      <div class="stats">
+        TOTAL WORDS : <span id="totalCount"></span><br />
+        FOUND : <span id="foundCount">0</span>
+      </div>
+    </aside>
+
+    <!-- CENTER PANEL : GAME -->
+    <main id="gameArea">
+      <canvas id="game"></canvas>
+    </main>
+
+    <!-- RIGHT PANEL : FOUND WORDS -->
+    <aside id="foundWordsSection">
+      <div class="title">FOUND WORDS</div>
+      <div id="foundWordsGrid"></div>
+    </aside>
+
   </div>
 
-  <!-- Found Words (Right Bottom) -->
-  <div id="foundWords">
-    <div class="title">FOUND WORDS</div>
-    <ul id="foundList"></ul>
-  </div>
-
-  <!-- Game Canvas -->
-  <canvas id="game"></canvas>
-
+  <!-- GAME SCRIPT -->
   <script src="script.js"></script>
+
 </body>
 </html>
